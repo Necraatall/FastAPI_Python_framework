@@ -6,7 +6,7 @@ class Ticket(Base):
     __tablename__ = "tickets"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
+    title = Column(String, unique=True)
+    description = Column(String)
     done = Column(Boolean, index=True)
-    description = Column(Integer, index=True)
+    priority = Column(Integer, index=True)
