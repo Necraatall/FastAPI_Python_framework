@@ -135,7 +135,7 @@ def add_ticket(
     print(f"TOTO JE ID: {id.id}")
     ticket = create_db_ticket(
         db, 
-        # id = id.id, 
+        # id = id.id, # nemela by si ji db pridavat sama?
         title = id.title,
         description = id.description,
         done = id.done,
