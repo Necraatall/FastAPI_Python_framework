@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String
 from typing import Union, List
 from database import Base
+from sqlalchemy.orm import Relationship
 
 class Ticket(Base):
     __tablename__ = "tickets"

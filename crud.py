@@ -40,8 +40,15 @@ def update_ticket(db: Session, skip: int = 0, limit: int = 100):
 def create_db_ticket(
     db: Session,
     ticket: schemas.ItemCreate):
-    db_ticket = models.Item(**ticket.dict(), id=id)
+    db_ticket = models.Ticket(**ticket.dict(), id=id)
     db.add(db_ticket)
     db.commit()
     db.refresh(db_ticket)
     return db_ticket
+
+# def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
+#     db_item = models.Item(**item.dict(), owner_id=user_id)
+#     db.add(db_item)
+#     db.commit()
+#     db.refresh(db_item)
+#     return db_item

@@ -3,8 +3,9 @@ from fastapi import FastAPI, Request, Header, Depends, Response
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 
-from schemas import Item
+from schemas import Item, ItemCreate
 from crud import get_ticket, create_db_ticket
 from database import SessionLocal, engine
 from models import Ticket
@@ -117,15 +118,27 @@ def get_tickets_by_id(tickets_id: int, response: Response) -> Item:
     return ticket
 
 
-@app.put("/index/{tickets_id}")
+@app.put("/index/{create_ticket}", response_model=ItemCreate)
 def add_ticket(
     title: str,
     description: str,
     done: bool, 
     priority: int,
     response: Response
-    ):
+    ) -> ItemCreate:
     # add ticket
     db = SessionLocal()
-    ticket = create_db_ticket(db, title, description, done, priority)
+
+    # TODO: jak se veme posledni id zaznamu a pripocita +1, jak se z ticketu udela dict?
+    id = (db.query(models.Ticket).order_by(desc(Ticket.id)).first())
+    id.id = id.id + 1
+    print(f"TOTO JE ID: {id.id}")
+    ticket = create_db_ticket(
+        db, 
+        # id = id.id, 
+        title = id.title,
+        description = id.description,
+        done = id.done,
+        priority = id.priority
+        )
     return ticket
