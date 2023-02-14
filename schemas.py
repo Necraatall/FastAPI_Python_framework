@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Union, List
 
 
 class ItemBase(BaseModel):
@@ -7,9 +8,11 @@ class ItemBase(BaseModel):
     done = bool
     priority = int
 
-
 class ItemCreate(ItemBase):
-    pass
+    title = str
+    description = str
+    done = bool
+    priority = int
 
 
 class Item(ItemBase):
@@ -17,6 +20,7 @@ class Item(ItemBase):
 
     class Config:
         orm_mode = True
+        extra = "forbid"
 
 
 class ItemUpdate(ItemBase):
@@ -25,3 +29,13 @@ class ItemUpdate(ItemBase):
 
 class ItemPatch(ItemBase):
     pass
+
+# class RequestPayloadService(BaseModel):
+#     """
+#     Request payload service
+#     """
+
+#     header: RequestPayloadHeader = Field(...)
+#     params: Union[RequestPayloadPositionsParams, RequestPayloadOrdersParams] = Field(
+#         ...
+#     )

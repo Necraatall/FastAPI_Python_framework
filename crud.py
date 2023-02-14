@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from typing import Union, List
 import models, schemas
 
 
@@ -37,7 +37,9 @@ def update_ticket(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Item).offset(skip).limit(limit).all()
 
 
-def create_db_ticket(db: Session, ticket: schemas.ItemCreate, id: int):
+def create_db_ticket(
+    db: Session,
+    ticket: schemas.ItemCreate):
     db_ticket = models.Item(**ticket.dict(), id=id)
     db.add(db_ticket)
     db.commit()
